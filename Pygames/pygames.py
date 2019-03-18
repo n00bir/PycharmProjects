@@ -35,19 +35,21 @@ class Player(pygame.sprite.Sprite):
         self.rect.bottom = HEIGHT - 10
         self.speedx = 0
 
+
     def update(self):
         self.speedx = 0
         keystate = pygame.key.get_pressed()
-        if keystate[pygame.K_LEFT]:
+        if keystate[pygame.K_LEFT] or keystate[pygame.K_a]:
             self.speedx = -8
-        if keystate[pygame.K_RIGHT]:
+        if keystate[pygame.K_RIGHT] or keystate[pygame.K_d]:
             self.speedx = 8
         self.rect.x += self.speedx
-        if self.rect.right > WIDTH:
+        if self.rect.right > WIDTH: #changes
             self.rect.right = WIDTH
         if self.rect.left < 0:
             self.rect.left = 0
 
+#HI
     def shoot(self):
         bullet = Bullet(self.rect.centerx, self.rect.top)
         all_sprites.add(bullet)
@@ -107,7 +109,7 @@ for i in range(8):
     all_sprites.add(m)
     mobs.add(m)
 
-# Game loop
+# Game loop. Running is used to make the code readable.
 running = True
 while running:
     # keep loop running at the right speed
