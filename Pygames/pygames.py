@@ -1,7 +1,15 @@
 import pygame
 import random
 from os import path
+from tkinter import *
 
+root = Tk()
+
+thislabel = Label(root, text = "This is my game.")
+
+thislabel.pack()
+
+root.mainloop()
 img_dir = path.join(path.dirname(__file__), 'img')
 
 WIDTH = 480
