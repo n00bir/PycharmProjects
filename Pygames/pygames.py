@@ -3,7 +3,9 @@ import random
 from os import path
 from tkinter import *
 
-root = Tk()
+root = tk.Tk()
+root.mainloop()
+
 
 thislabel = Label(root, text = "This is my game.")
 
