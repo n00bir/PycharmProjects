@@ -3,19 +3,11 @@ import random
 from os import path
 from tkinter import *
 
-root = tk.Tk()
-root.mainloop()
 
-
-thislabel = Label(root, text = "This is my game.")
-
-thislabel.pack()
-
-root.mainloop()
 img_dir = path.join(path.dirname(__file__), 'img')
 
-WIDTH = 480
-HEIGHT = 600
+WIDTH = 600
+HEIGHT = 480
 FPS = 60
 
 # define colors
@@ -32,17 +24,18 @@ pygame.mixer.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Shmup!")
 clock = pygame.time.Clock()
-
+angle =  0
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.transform.scale(player_img, (50, 38))
+        self.image = pygame.transform.scale(player_img,(150, 30))
+        self.image = pygame.transform.rotate(player_img, angle)
         self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.radius = 20
         # pygame.draw.circle(self.image, RED, self.rect.center, self.radius)
         self.rect.centerx = WIDTH / 2
-        self.rect.bottom = HEIGHT - 10
+        self.rect.bottom = HEIGHT -10
         self.speedx = 0
 
 
@@ -53,6 +46,10 @@ class Player(pygame.sprite.Sprite):
             self.speedx = -8
         if keystate[pygame.K_RIGHT] or keystate[pygame.K_d]:
             self.speedx = 8
+        if keystate[pygame.K_UP] or keystate[pygame.K_w]:
+                self.speedy = -8
+        if keystate[pygame.K_DOWN] or keystate[pygame.K_s]:
+                self.speedy = 8
         self.rect.x += self.speedx
         if self.rect.right > WIDTH: #changes
             self.rect.right = WIDTH
@@ -74,7 +71,7 @@ class Mob(pygame.sprite.Sprite):
         self.radius = int(self.rect.width * .85 / 2)
         # pygame.draw.circle(self.image, RED, self.rect.center, self.radius)
         self.rect.x = random.randrange(WIDTH - self.rect.width)
-        self.rect.y = random.randrange(-100, -40)
+        self.rect.y = random.randrange(-60, -50)
         self.speedy = random.randrange(1, 8)
         self.speedx = random.randrange(-3, 3)
 
@@ -83,7 +80,7 @@ class Mob(pygame.sprite.Sprite):
         self.rect.y += self.speedy
         if self.rect.top > HEIGHT + 10 or self.rect.left < -25 or self.rect.right > WIDTH + 20:
             self.rect.x = random.randrange(WIDTH - self.rect.width)
-            self.rect.y = random.randrange(-100, -40)
+            self.rect.y = random.randrange(-50 ,-20)
             self.speedy = random.randrange(1, 8)
 
 class Bullet(pygame.sprite.Sprite):
